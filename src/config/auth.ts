@@ -51,6 +51,16 @@ export const auth = betterAuth({
         process.env.GOOGLE_CLIENT_SECRET || "mock-google-client-secret",
     },
   },
+  account: {
+    skipStateCookieCheck: true,
+  },
+  advanced: {
+    useSecureCookies: true,
+    defaultCookieAttributes: {
+      sameSite: "none",
+      secure: true,
+    },
+  },
   trustedOrigins: async (request) => {
     const origins = [...defaultOrigins];
     if (request) {
