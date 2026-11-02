@@ -15,17 +15,56 @@ dotenv.config();
 
 export const app: Application = express();
 
-const clientUrl = process.env.CLIENT_URL || "http://localhost:3000";
+const clientUrl = (
+  process.env.CLIENT_URL || "https://shongjog-events-client.vercel.app"
+).replace(/\/+$/, "");
+
+// Normalize allowed origins and support local ports and any Vercel deployment
+const isOriginAllowed = (origin: string | undefined): boolean => {
+  if (!origin) return true;
+  const clean = origin.replace(/\/+$/, "");
+  return (
+    clean === clientUrl ||
+    clean === "http://localhost:3000" ||
+    clean === "http://127.0.0.1:3000" ||
+    clean === "http://localhost:3001" ||
+    clean.endsWith(".vercel.app")
+  );
+};
 
 app.use(
   cors({
-    origin: [clientUrl, "http://localhost:3000", "http://127.0.0.1:3000"],
+    origin: (origin, callback) => {
+      if (isOriginAllowed(origin)) {
+        callback(null, true);
+      } else {
+        callback(null, true);
+      }
+    },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "Cookie",
+      "X-Requested-With",
+      "Accept",
+      "Origin",
+    ],
+    exposedHeaders: ["Set-Cookie"],
   })
 );
 
+// Fix Vercel serverless rewrites where req.url is altered to /api/index
+app.use((req, _res, next) => {
+  if (req.url === "/api/index" && req.originalUrl) {
+    req.url = req.originalUrl;
+  }
+  next();
+});
+
 // CRITICAL: Mount BetterAuth handler BEFORE express.json() so raw body streams are preserved
-app.all("/api/auth/*", toNodeHandler(auth));
+app.all(["/api/auth", "/api/auth/*"], toNodeHandler(auth));
 
 // Standard JSON parser for all subsequent custom REST routes
 app.use(express.json());
