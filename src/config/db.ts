@@ -1,7 +1,7 @@
 import { MongoClient, Db, Collection } from "mongodb";
 import dotenv from "dotenv";
-import { IEvent, IJoinedEvent } from "../types";
-import { checkAndSeedEvents } from "./seed";
+import { IEvent, IJoinedEvent } from "../types/index.js";
+import { checkAndSeedEvents } from "./seed.js";
 
 dotenv.config();
 

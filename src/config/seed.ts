@@ -1,5 +1,5 @@
 import { Collection } from "mongodb";
-import { IEvent } from "../types";
+import { IEvent } from "../types/index.js";
 
 export function getInitialSeedEvents(): Omit<IEvent, "_id">[] {
   const now = Date.now();

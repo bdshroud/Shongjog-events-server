@@ -2,14 +2,14 @@ import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { toNodeHandler } from "better-auth/node";
-import { auth } from "./config/auth";
-import authRoutes from "./routes/auth.routes";
-import eventRoutes from "./routes/events.routes";
-import participantRoutes from "./routes/participants.routes";
+import { auth } from "./config/auth.js";
+import authRoutes from "./routes/auth.routes.js";
+import eventRoutes from "./routes/events.routes.js";
+import participantRoutes from "./routes/participants.routes.js";
 import {
   notFoundHandler,
   globalErrorHandler,
-} from "./middlewares/errorHandler";
+} from "./middlewares/errorHandler.js";
 
 dotenv.config();
 

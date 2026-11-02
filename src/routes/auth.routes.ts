@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { issueJWT } from "../controllers/auth.controller";
+import { issueJWT } from "../controllers/auth.controller.js";
 
 const router = Router();
 

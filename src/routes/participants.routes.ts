@@ -3,8 +3,8 @@ import {
   joinEvent,
   getJoinedEvents,
   checkUserJoinStatus,
-} from "../controllers/participants.controller";
-import { verifyJWT } from "../middlewares/verifyJWT";
+} from "../controllers/participants.controller.js";
+import { verifyJWT } from "../middlewares/verifyJWT.js";
 
 const router = Router();
 

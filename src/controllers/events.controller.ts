@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
-import { eventsCollection, joinedEventsCollection, db } from "../config/db";
-import { eventSchema } from "../validators/event.validator";
-import { IEvent, IJoinedEvent } from "../types";
-import { getInitialSeedEvents } from "../config/seed";
+import { eventsCollection, joinedEventsCollection, db } from "../config/db.js";
+import { eventSchema } from "../validators/event.validator.js";
+import { IEvent, IJoinedEvent } from "../types/index.js";
+import { getInitialSeedEvents } from "../config/seed.js";
 
 // Seed or reset community events
 export async function seedCommunityEvents(
@@ -59,7 +59,7 @@ export async function getRecentEvents(
 
     // Attach participant counts
     const eventsWithCounts = await Promise.all(
-      rawEvents.map(async (event) => {
+      rawEvents.map(async (event: any) => {
         const count = await jCol.countDocuments({
           $or: [
             { eventId: event._id! },
@@ -127,7 +127,7 @@ export async function getUpcomingEvents(
       .toArray();
 
     const eventsWithCounts = await Promise.all(
-      rawEvents.map(async (event) => {
+      rawEvents.map(async (event: any) => {
         const count = await jCol.countDocuments({
           $or: [
             { eventId: event._id! },
@@ -280,7 +280,7 @@ export async function getMyEvents(req: Request, res: Response): Promise<void> {
       .toArray();
 
     const eventsWithCounts = await Promise.all(
-      events.map(async (event) => {
+      events.map(async (event: any) => {
         const count = await jCol.countDocuments({
           $or: [
             { eventId: event._id! },

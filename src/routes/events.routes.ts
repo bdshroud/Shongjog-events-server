@@ -8,8 +8,8 @@ import {
   updateEvent,
   deleteEvent,
   seedCommunityEvents,
-} from "../controllers/events.controller";
-import { verifyJWT } from "../middlewares/verifyJWT";
+} from "../controllers/events.controller.js";
+import { verifyJWT } from "../middlewares/verifyJWT.js";
 
 const router = Router();
 

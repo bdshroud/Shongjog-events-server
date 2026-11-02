@@ -1,6 +1,7 @@
 {
   "name": "social-events-server",
   "version": "1.0.0",
+  "type": "module",
   "description": "ShongjogBD Social Development Events Platform Backend API",
   "main": "dist/server.js",
   "scripts": {

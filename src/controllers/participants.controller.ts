@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
-import { eventsCollection, joinedEventsCollection, db } from "../config/db";
-import { IEvent, IJoinedEvent } from "../types";
+import { eventsCollection, joinedEventsCollection, db } from "../config/db.js";
+import { IEvent, IJoinedEvent } from "../types/index.js";
 
 // Protected: Join a community event
 export async function joinEvent(req: Request, res: Response): Promise<void> {
