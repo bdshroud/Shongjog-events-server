@@ -17,7 +17,13 @@ export let db: Db;
 export let eventsCollection: Collection<IEvent>;
 export let joinedEventsCollection: Collection<IJoinedEvent>;
 
+let isConnected = false;
+
 export async function connectDB(): Promise<Db> {
+  if (isConnected && db) {
+    return db;
+  }
+
   try {
     await client.connect();
     db = client.db(dbName);
@@ -34,6 +40,7 @@ export async function connectDB(): Promise<Db> {
     await eventsCollection.createIndex({ eventDate: 1 });
     await eventsCollection.createIndex({ creatorEmail: 1 });
 
+    isConnected = true;
     console.log(`[Database] Connected successfully to MongoDB: "${dbName}"`);
 
     // Automatic seed check: seed 8 realistic future events if collection is currently empty

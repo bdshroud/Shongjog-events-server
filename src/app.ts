@@ -47,3 +47,5 @@ app.get("/health", (_req: Request, res: Response) => {
 // 404 & Global error handlers
 app.use(notFoundHandler);
 app.use(globalErrorHandler);
+
+export default app;
