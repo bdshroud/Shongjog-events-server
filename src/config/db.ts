@@ -19,6 +19,11 @@ export let joinedEventsCollection: Collection<IJoinedEvent>;
 
 let isConnected = false;
 
+/**
+ * Database Connection Manager
+ * Establishes cached connection to MongoDB, enforces compound uniqueness indexes,
+ * and ensures event collection indexes for rapid chronological queries.
+ */
 export async function connectDB(): Promise<Db> {
   if (isConnected && db) {
     return db;
