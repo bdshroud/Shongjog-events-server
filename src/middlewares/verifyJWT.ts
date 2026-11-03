@@ -8,6 +8,10 @@ dotenv.config();
 const JWT_SECRET =
   process.env.JWT_SECRET || "shongjogbd_jwt_secret_dev_key_2026";
 
+/**
+ * JWT Authentication Middleware
+ * Validates Bearer authorization header and attaches authenticated user payload to request.
+ */
 export function verifyJWT(
   req: Request,
   res: Response,
