@@ -1,3 +1,8 @@
+/**
+ * Event Controller
+ * Orchestrates CRUD operations, pagination, search, category filters,
+ * and participant count aggregations for all community initiatives.
+ */
 import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
 import { eventsCollection, joinedEventsCollection, db } from "../config/db.js";
