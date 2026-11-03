@@ -1,3 +1,8 @@
+/**
+ * Verified Seed Dataset & Database Sanitation Service
+ * Automatically deduplicates matching title documents and replaces broken image URLs
+ * with category-verified Unsplash assets upon service initialization.
+ */
 import { Collection, ObjectId } from "mongodb";
 import { IEvent, IJoinedEvent } from "../types/index.js";
 
