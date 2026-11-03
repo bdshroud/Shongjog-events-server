@@ -44,3 +44,10 @@ npm run dev   # Start development server with tsx hot-reload
 npm run build # Compile TypeScript to dist/
 npm run start # Start production server from dist/
 ```
+
+
+### Environment Architecture
+- `PORT`: Server listen port (default 5000)
+- `MONGODB_URI`: Primary MongoDB replica set or standalone connection URI
+- `DB_NAME`: Database namespace (`shongjogbd`)
+- `JWT_SECRET`: Secret key for volunteer session token signing
