@@ -3,7 +3,7 @@ import { ObjectId } from "mongodb";
 import { eventsCollection, joinedEventsCollection, db } from "../config/db.js";
 import { eventSchema } from "../validators/event.validator.js";
 import { IEvent, IJoinedEvent } from "../types/index.js";
-import { getInitialSeedEvents } from "../config/seed.js";
+import { getInitialSeedEvents, cleanupAndDeduplicateEvents } from "../config/seed.js";
 
 // Seed or reset community events
 export async function seedCommunityEvents(
@@ -12,24 +12,25 @@ export async function seedCommunityEvents(
 ): Promise<void> {
   try {
     const col = eventsCollection || db.collection<IEvent>("events");
+    const jCol =
+      joinedEventsCollection || db.collection<IJoinedEvent>("joined_events");
     const count = await col.countDocuments();
-    if (count > 0) {
-      res.status(200).json({
-        success: true,
-        message: `Database already has ${count} events. No seed required.`,
-        count,
-      });
-      return;
+    let inserted = 0;
+    if (count === 0) {
+      const seeds = getInitialSeedEvents();
+      const result = await col.insertMany(seeds as any);
+      inserted = result.insertedCount;
     }
 
-    const seeds = getInitialSeedEvents();
-    const result = await col.insertMany(seeds as any);
+    const cleanupStats = await cleanupAndDeduplicateEvents(col, jCol);
+    const finalCount = await col.countDocuments();
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
-      message: `Successfully seeded ${result.insertedCount} realistic Bangladesh community events.`,
-      count: result.insertedCount,
+      message: `Database synchronized. Seeded: ${inserted}, deduplicated: ${cleanupStats.deletedDuplicates}, URLs updated: ${cleanupStats.updatedEvents + cleanupStats.updatedJoined}.`,
+      count: finalCount,
     });
+    return;
   } catch (error) {
     console.error("[Seed] Error seeding events:", error);
     res.status(500).json({

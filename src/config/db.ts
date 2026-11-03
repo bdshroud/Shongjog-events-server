@@ -43,8 +43,8 @@ export async function connectDB(): Promise<Db> {
     isConnected = true;
     console.log(`[Database] Connected successfully to MongoDB: "${dbName}"`);
 
-    // Automatic seed check: seed 8 realistic future events if collection is currently empty
-    await checkAndSeedEvents(eventsCollection);
+    // Automatic seed check & startup cleanup: deduplicate events & fix broken URLs
+    await checkAndSeedEvents(eventsCollection, joinedEventsCollection);
 
     return db;
   } catch (error) {
