@@ -1,3 +1,7 @@
+/**
+ * Zod validation schema for incoming event creation and update payloads.
+ * Guarantees strict future dates, sanitized string bounds, and category validation.
+ */
 import { z } from "zod";
 
 export const eventSchema = z.object({
