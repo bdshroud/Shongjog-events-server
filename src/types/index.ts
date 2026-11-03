@@ -1,3 +1,7 @@
+/**
+ * Core domain types and interfaces for the Shongjog community platform.
+ * Defines event data models, participant rosters, and authentication payloads.
+ */
 import { ObjectId } from "mongodb";
 
 export type EventCategory =
