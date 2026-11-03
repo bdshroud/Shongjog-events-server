@@ -1,3 +1,7 @@
+/**
+ * Global Error and Route Fallback Handlers
+ * Provides uniform JSON error formatting across all express routes.
+ */
 import { Request, Response, NextFunction } from "express";
 
 export function notFoundHandler(req: Request, res: Response): void {
