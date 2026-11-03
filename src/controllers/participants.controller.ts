@@ -1,3 +1,8 @@
+/**
+ * Participant Controller
+ * Manages volunteer event registration, roster queries, and event leave actions.
+ * Backed by unique compound indexes preventing duplicate volunteer commitments.
+ */
 import { Request, Response } from "express";
 import { ObjectId } from "mongodb";
 import { eventsCollection, joinedEventsCollection, db } from "../config/db.js";
